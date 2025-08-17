@@ -1,0 +1,20 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Tapşırığı Redaktə Et</title>
+    <link rel="stylesheet" href="{% static 'todo_app/css/style.css' %}">
+</head>
+
+<body>
+    <h1>Tapşırığı Redaktə Et</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Saxla</button>
+        <a href="{% url 'home' %}">Geri</a>
+    </form>
+</body>
+
+</html>

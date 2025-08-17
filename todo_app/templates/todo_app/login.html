@@ -1,0 +1,19 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Daxil Ol</title>
+    <link rel="stylesheet" href="{% static 'todo_app/css/style.css' %}">
+</head>
+
+<body>
+    <h1>Daxil Ol</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Daxil Ol</button>
+    </form>
+</body>
+
+</html>

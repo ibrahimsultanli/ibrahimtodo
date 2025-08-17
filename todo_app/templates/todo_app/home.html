@@ -1,0 +1,40 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>To-Do Layihəsi</title>
+    <link rel="stylesheet" href="{% static 'todo_app/css/style.css' %}">
+</head>
+
+<body>
+    <h1>To-Do Siyahısı</h1>
+    {% if user.is_authenticated %}
+    <p>Xoş gəldin, {{ user.username }}!</p>
+    <a href="{% url 'logout' %}">Çıxış</a>
+    {% else %}
+    <a href="{% url 'login' %}">Daxil Ol</a>
+    {% endif %}
+
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Tapşırıq Əlavə Et</button>
+    </form>
+
+    <ul>
+        {% for task in tasks %}
+        <li {% if task.completed %}class="completed" {% endif %}>
+            {{ task.title }} - {% if task.completed %}Tamamlandı{% else %}Gözləyir{% endif %}
+            <span>
+                <a href="{% url 'edit_task' task.id %}">Redaktə</a>
+                <a href="{% url 'delete_task' task.id %}">Sil</a>
+            </span>
+        </li>
+        {% empty %}
+        <li>Heç bir tapşırıq yoxdur.</li>
+        {% endfor %}
+    </ul>
+</body>
+
+</html>
