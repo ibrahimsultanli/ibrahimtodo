@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.forms import AuthenticationForm
 from .models import Task
-from .forms import TaskForm
+from .forms import TaskForm, SignUpForm
 from rest_framework import viewsets
 from .serializers import TaskSerializer
 
@@ -61,6 +61,18 @@ def login_view(request):
 def logout_view(request):
     logout(request)
     return redirect('login')
+
+
+def signup_view(request):
+    if request.method == 'POST':
+        form = SignUpForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)
+            return redirect('home')
+    else:
+        form = SignUpForm()
+    return render(request, 'todo_app/signup.html', {'form': form})
 
 
 class TaskViewSet(viewsets.ModelViewSet):

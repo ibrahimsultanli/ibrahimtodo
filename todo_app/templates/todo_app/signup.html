@@ -3,18 +3,18 @@
 <html>
 
 <head>
-    <title>Daxil Ol</title>
+    <title>Qeydiyyat</title>
     <link rel="stylesheet" href="{% static 'todo_app/css/style.css' %}">
 </head>
 
 <body>
-    <h1>Daxil Ol</h1>
+    <h1>Qeydiyyat</h1>
     <form method="post">
         {% csrf_token %}
         {{ form.as_p }}
-        <button type="submit">Daxil Ol</button>
+        <button type="submit">Qeydiyyatdan Keç</button>
     </form>
-    <p>Hesabın yoxdur? <a href="{% url 'signup' %}">Qeydiyyatdan Keç</a></p>
+    <p>Hesabın var? <a href="{% url 'login' %}">Daxil Ol</a></p>
 </body>
 
 </html>

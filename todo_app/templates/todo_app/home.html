@@ -13,7 +13,7 @@
     <p>Xoş gəldin, {{ user.username }}!</p>
     <a href="{% url 'logout' %}">Çıxış</a>
     {% else %}
-    <a href="{% url 'login' %}">Daxil Ol</a>
+    <a href="{% url 'login' %}">Daxil Ol</a> | <a href="{% url 'signup' %}">Qeydiyyat</a>
     {% endif %}
 
     <form method="post">

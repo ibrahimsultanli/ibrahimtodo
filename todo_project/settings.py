@@ -61,6 +61,7 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 ALLOWED_HOSTS = ['*']  # Production üçün dəyişəcək
 DEBUG = False  # Production üçün False
+LOGIN_URL = '/login/'  # İstifadəçi giriş URL-i
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
