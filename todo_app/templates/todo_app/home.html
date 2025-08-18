@@ -1,40 +1,51 @@
 {% load static %}
 <!DOCTYPE html>
 <html>
-
 <head>
     <title>To-Do Layihəsi</title>
     <link rel="stylesheet" href="{% static 'todo_app/css/style.css' %}">
 </head>
-
 <body>
     <h1>To-Do Siyahısı</h1>
     {% if user.is_authenticated %}
-    <p>Xoş gəldin, {{ user.username }}!</p>
-    <a href="{% url 'logout' %}">Çıxış</a>
+        <p>Xoş gəldin, {{ user.username }}!</p>
+        <a href="{% url 'logout' %}">Çıxış</a>
     {% else %}
-    <a href="{% url 'login' %}">Daxil Ol</a> | <a href="{% url 'signup' %}">Qeydiyyat</a>
+        <a href="{% url 'login' %}">Daxil Ol</a> | <a href="{% url 'signup' %}">Qeydiyyat</a>
     {% endif %}
 
+    <!-- Kateqoriya filtri -->
+    <form method="get">
+        <label for="category">Kateqoriya:</label>
+        <select name="category" id="category" onchange="this.form.submit()">
+            <option value="">Hamısı</option>
+            <option value="personal" {% if category == 'personal' %}selected{% endif %}>Şəxsi</option>
+            <option value="work" {% if category == 'work' %}selected{% endif %}>İş</option>
+            <option value="education" {% if category == 'education' %}selected{% endif %}>Təhsil</option>
+            <option value="other" {% if category == 'other' %}selected{% endif %}>Digər</option>
+        </select>
+    </form>
+
+    <!-- Tapşırıq forması -->
     <form method="post">
         {% csrf_token %}
         {{ form.as_p }}
         <button type="submit">Tapşırıq Əlavə Et</button>
     </form>
 
+    <!-- Tapşırıq siyahısı -->
     <ul>
         {% for task in tasks %}
-        <li {% if task.completed %}class="completed" {% endif %}>
-            {{ task.title }} - {% if task.completed %}Tamamlandı{% else %}Gözləyir{% endif %}
-            <span>
-                <a href="{% url 'edit_task' task.id %}">Redaktə</a>
-                <a href="{% url 'delete_task' task.id %}">Sil</a>
-            </span>
-        </li>
+            <li {% if task.completed %}class="completed"{% endif %}>
+                {{ task.title }} ({{ task.get_category_display }}) - {% if task.completed %}Tamamlandı{% else %}Gözləyir{% endif %}
+                <span>
+                    <a href="{% url 'edit_task' task.id %}">Redaktə</a>
+                    <a href="{% url 'delete_task' task.id %}">Sil</a>
+                </span>
+            </li>
         {% empty %}
-        <li>Heç bir tapşırıq yoxdur.</li>
+            <li>Heç bir tapşırıq yoxdur.</li>
         {% endfor %}
     </ul>
 </body>
-
 </html>
