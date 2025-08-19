@@ -10,6 +10,7 @@ from .serializers import TaskSerializer
 
 @login_required
 def home(request):
+    category = request.GET.get('category', '')
     if request.method == 'POST':
         form = TaskForm(request.POST)
         if form.is_valid():
@@ -21,7 +22,10 @@ def home(request):
         form = TaskForm()
 
     tasks = Task.objects.filter(user=request.user)
-    return render(request, 'todo_app/home.html', {'tasks': tasks, 'form': form})
+    if category:
+        tasks = tasks.filter(category=category)
+
+    return render(request, 'todo_app/home.html', {'tasks': tasks, 'form': form, 'category': category})
 
 
 @login_required

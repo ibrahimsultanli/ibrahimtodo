@@ -7,7 +7,10 @@ from django.contrib.auth.models import User
 class TaskForm(forms.ModelForm):
     class Meta:
         model = Task
-        fields = ['title', 'completed']
+        fields = ['title', 'completed', 'category']
+        widgets = {
+            'category': forms.Select(),  # Dropdown menyusu üçün
+        }
 
 
 class SignUpForm(UserCreationForm):
